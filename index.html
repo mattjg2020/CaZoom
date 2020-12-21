@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Settlers of CaZoom</title>
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"></script>
+	<script src='https://mattjg2020.github.io/CaZoom/CaZoom.js'></script>
+	<link rel="stylesheet" href='https://mattjg2020.github.io/CaZoom/CaZoom.css'>
+</head>
+<body id = 'body'>
+	<div id = 'buildingCard' onclick = 'cardClick()'></div>
+	<div id = "pregame">
+		<H1>Settlers of CaZoom</H1>
+
+		<input type="radio", id="normal", name="board_Type" onclick="pregameBoxes()" checked="true">2-4 Players</input>
+		<div id = "nameNormal" style="margin-left: 50px;"><br>
+			<input type="text" class='name_normal'/><br>
+			<input type="text" class='name_normal'/><br>
+			<input type="text" class='name_normal'/><br>
+			<input type="text" class='name_normal'/><br>
+		</div>
+		<br><br>
+		<input type="radio", id="extension", name="board_Type" onclick="pregameBoxes()">5-6 Players</input>
+		<div id = "nameExtension" style="margin-left: 50px; display: none"><br>
+			<input type="text" class='name_extension'/><br>
+			<input type="text" class='name_extension'/><br>
+			<input type="text" class='name_extension'/><br>
+			<input type="text" class='name_extension'/><br>
+			<input type="text" class='name_extension'/><br>
+			<input type="text" class='name_extension'/><br>
+		</div>
+		<br><br>
+		<input type="radio", id="custom", name="board_Type" onclick="pregameBoxes()">Custom Map</input>
+
+		<div id = 'customSettings'  style = "margin-left: 50px; display: none;">
+			X: <input type="number" id="customX" min="1" max="6" value="3" onKeyDown="return false" ><br>
+			Y: <input type="number" id="customY" min="1" max="6" value="3" onKeyDown="return false"><br>
+			Z: <input type="number" id="customZ" min="1" max="6" value="5"" onKeyDown="return false"><br><br>
+			<input type="text" class='name_custom'/><br>
+			<input type="text" class='name_custom'/><br>
+			<input type="text" class='name_custom'/><br>
+			<input type="text" class='name_custom'/><br>
+			<input type="text" class='name_custom'/><br>
+			<input type="text" class='name_custom'/><br>
+			<input type="text" class='name_custom'/><br>
+			<input type="text" class='name_custom'/><br>
+			<input type="text" class='name_custom'/><br>
+			<input type="text" class='name_custom'/><br>
+			<input type="text" class='name_custom'/><br>
+			<input type="text" class='name_custom'/><br>
+		</div>
+
+		<br><br>
+		Background Color:
+		<select id = 'bgColorSelect'>
+			<option value = '#fafafa'>White</option>
+			<option value = '#deebff'>Blue</option>
+			<option value = '#888888'>Gray</option>
+			<option value = '#111111'>Black</option>
+		</select>
+		<br><br>
+		<button onclick="gameSetup()">Create Map</button>
+	</div>
+	<div id = 'player_table' style = 'display: none;'>
+		<div id = 'tradeButton' onclick = "tradeButtonClick()">Make a Trade</div>
+		<!--<button onclick = 'test()'>test</button>-->
+		
+	</div>
+	<div id = 'pageDarken' style = 'visibility: hidden'></div>
+
+	<div id = 'tradePage' style = 'visibility: hidden'>
+		<div class = "xContainer"><span onclick = 'closeTradePage()' class = 'x'>X</span></div><br>
+		Trade with:
+		<select id = 'people' onchange="updateTradePage('both')"></select><br><br>
+
+		<input type ="number" id = "traderNumber" onchange="changePortNumberForTrade()" min="0" max = '9' value="0" onKeyDown="return false"/>
+		of my
+		<select id="traderTypes" onchange="updateTradePage('traderNum')">
+			<option value = 'grain'>grain</option>
+			<option value = 'wood'>wood</option>
+			<option value = 'wool'>wool</option>
+			<option value = 'ore'>ore</option>
+			<option value = 'brick'>brick</option>
+		</select><br><br>
+
+		for
+		<input type ="number" id = "tradeeNumber" min="0" max = '9' value="0" onKeyDown="return false"/>
+		<select id="tradeeTypes" onchange="updateTradePage('tradeeNum')">
+			<option value = 'grain'>grain</option>
+			<option value = 'wood'>wood</option>
+			<option value = 'wool'>wool</option>
+			<option value = 'ore'>ore</option>
+			<option value = 'brick'>brick</option>
+		</select>
+		<div id = 'makeTradeButton' onclick="makeTrade()">Make Trade</div>
+	</div>
+
+	<div id = 'yearOfPlentyPage' style = 'visibility: hidden'>
+		<div class = "xContainer"><span onclick = 'closeYOPPage()' class = 'x'>X</span></div><br>
+		Item one:
+		<select id="yearOfPlentyOne">
+			<option value = 'grain'>grain</option>
+			<option value = 'wood'>wood</option>
+			<option value = 'wool'>wool</option>
+			<option value = 'ore'>ore</option>
+			<option value = 'brick'>brick</option>
+		</select><br><br>
+
+		Item two:
+		<select id="yearOfPlentyTwo">
+			<option value = 'grain'>grain</option>
+			<option value = 'wood'>wood</option>
+			<option value = 'wool'>wool</option>
+			<option value = 'ore'>ore</option>
+			<option value = 'brick'>brick</option>
+		</select>
+		<div id = 'yearOfPlentyButton' onclick="yearOfPlentyConfirm()">Get Resources</div>
+	</div>
+
+
+	<div id = 'monopolyPage' style = 'visibility: hidden'>
+		<div class = "xContainer"><span onclick = 'closeMonopolyPage()' class = 'x'>X</span></div><br>
+		What do you want to collect?<br>
+		<div style = 'text-align: center'>
+			<select id="monopolyItem">
+				<option value = 'grain'>grain</option>
+				<option value = 'wood'>wood</option>
+				<option value = 'wool'>wool</option>
+				<option value = 'ore'>ore</option>
+				<option value = 'brick'>brick</option>
+			</select>
+		</div>
+		<div id = 'monopolyButton' onclick="monopolyConfirm()">Get Resources</div>
+	</div>
+
+	<div id = 'sevenPage' style = 'visibility: hidden'>
+		What do you want a card from?<br>
+		<div style = 'text-align: center'>
+			<select id="sevenSelect">
+			</select>
+		</div>
+		<div id = 'sevenButton' onclick="sevenConfirm()">Get Resources</div>
+	</div>
+</body>
+</html>
