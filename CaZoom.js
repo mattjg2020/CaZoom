@@ -560,18 +560,27 @@ function closeMonopolyPage(){
 function sevenConfirm(){
 	var person = document.getElementById('sevenSelect').value;
 	var hasResource = false;
-	while(!hasResource){
-		var randomNum = Math.floor(Math.random()*hexagonTypes.length)
-		if(players[person][hexagonTypes[randomNum]] > 0){
-			hasResource = true;
-			players[turn][hexagonTypes[randomNum]]++;
-			players[person][hexagonTypes[randomNum]]--;
+	for(i in hexagonTypes){
+		if(players[person][hexagonTypes[i]] > 0){
+			hasAnyResource = true;
+		}else{}
+		
+		if(i == hexagonTypes.length - 1 && !hasAnyResource){
+		}else if(i == hexagonTypes.length - 1){
+			while(!hasResource){
+				var randomNum = Math.floor(Math.random()*hexagonTypes.length)
+				if(players[person][hexagonTypes[randomNum]] > 0){
+					hasResource = true;
+					players[turn][hexagonTypes[randomNum]]++;
+					players[person][hexagonTypes[randomNum]]--;
+				}else{}
+			}
+			
+			document.getElementById('sevenPage').style.visibility = 'hidden';
+			document.getElementById('pageDarken').style.visibility = 'hidden';
+			updateResourceDisplay();
 		}else{}
 	}
-	
-	document.getElementById('sevenPage').style.visibility = 'hidden';
-	document.getElementById('pageDarken').style.visibility = 'hidden';
-	updateResourceDisplay();
 }
 
 function resetColors(){
