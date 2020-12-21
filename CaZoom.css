@@ -57,8 +57,7 @@ table{
     margin: 0 auto;
 }
 
-#nextTurnButton{
-    cursor: pointer;    
+#nextTurnButton{  
     padding: 5px;
     border-radius: 20px;
     margin: 5px;
