@@ -549,7 +549,7 @@ function monopolyConfirm(){
 	}
 	players[turn][item] += takenResources;
 	updateResourceDisplay();
-	closeYOPPage();
+	closeMonopolyPage();
 }
 
 function closeMonopolyPage(){
