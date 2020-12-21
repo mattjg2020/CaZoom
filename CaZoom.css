@@ -57,10 +57,6 @@ table{
     margin: 0 auto;
 }
 
-.turnButtons{
-    cursor: pointer;
-}
-
 #nextTurnButton{
     cursor: pointer;    
     padding: 5px;
