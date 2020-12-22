@@ -1768,11 +1768,6 @@ function updateTradePage(clearNum){
 	var traderType = document.getElementById('traderTypes');
 	var tradeeType = document.getElementById('tradeeTypes');
 
-	traderType.innerHTML = '';
-	for(i in hexagonTypes){
-		traderType.innerHTML += '<option value = "' + hexagonTypes[i] + '">' + hexagonTypes[i] + '</options>'
-	}
-
 	if(clearNum){
 		if(clearNum == 'both'){
 			traderNum.value = 0;
@@ -1802,7 +1797,6 @@ function updateTradePage(clearNum){
 			if(tradee.value == portTypes[i]){
 				traderNum.step = 2;
 				tradeeNum.disabled;
-				traderType.innerHTML = `<option value =` + tradee.value + `>` + tradee.value + `</option>`
 			}else{}
 		}
 	}		
