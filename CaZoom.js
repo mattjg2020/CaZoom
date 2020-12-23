@@ -1866,12 +1866,12 @@ function makeTrade(){
 	var tradeeNum = document.getElementById('tradeeNumber').value;
 	var traderType = document.getElementById('traderTypes').value;
 	var tradeeType = document.getElementById('tradeeTypes').value;
-	players[turn][traderType] -= traderNum;
-	players[turn][tradeeType] += tradeeNum;
+	players[turn][traderType] -= parseInt(traderNum);
+	players[turn][tradeeType] += parseInt(tradeeNum);
 	for(i in players){
 		if(players[i].name == tradee){
-			players[i][tradeeType] -= tradeeNum;
-			players[i][traderType] += traderNum;
+			players[i][tradeeType] -= parseInt(tradeeNum);
+			players[i][traderType] += parseInt(traderNum);
 		}else{}
 	}
 	updateResourceDisplay()
