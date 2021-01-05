@@ -292,9 +292,9 @@ function giveResourcesOnBeginingPlacement(){
 		for(j in vertices){
 			var distance = Math.sqrt(Math.pow((vertices[j].x - hexagon[i].x), 2) + Math.pow((vertices[j].y - hexagon[i].y), 2))
 			if (distance < mapR*1.01){
-				if(vertices[j].pieceStatus == 'settlement'){
+				if(vertices[j].pieceStatus == 'settlement' && hexagon[i].type != 'desert'){
 					eval('players[vertices[j].ownership].' + hexagon[i].type + '++');
-				}else if(vertices[j].pieceStatus == 'city'){
+				}else if(vertices[j].pieceStatus == 'city' && hexagon[i].type != 'desert'){
 					eval('players[vertices[j].ownership].' + hexagon[i].type + '+= 2');
 				}else{}
 			}else{}
@@ -502,8 +502,7 @@ function knightUsed(owner){
 	}
 }
 
-function VPUsed(){
-}
+function VPUsed(){}
 
 function roadBuildingUsed(owner){
 	if(owner == turn){
@@ -1925,7 +1924,6 @@ function updateTradePage(clearNum){
 			}else{}
 		}
 	}	
-	
 	changePortNumberForTrade()
 }
 
@@ -1950,6 +1948,39 @@ function changePortNumberForTrade(){
 function closeTradePage(){
 	document.getElementById('tradePage').style.visibility = 'hidden';
 	document.getElementById('pageDarken').style.visibility = 'hidden'
+}
+
+function manual(name, resource, amount){
+	var goodName = false;
+	var goodResource = false;
+	for(i in players){
+		if(players[i].name == name){
+			goodName = true;
+		}else{}
+	}
+	for(i in hexagonTypes){
+		if(hexagonTypes[i] == resource){
+			goodResource = true;
+		}else{}
+	}
+
+	if(!goodName){
+		console.error('The name you entered was not found.')
+		console.error("Follow this format: manual('Joe', 'wool', -2)")
+	}else if(!goodResource){
+		console.error('Please enter a valid resource. Resource must be wood, wool, grain, brick, or ore.')
+		console.error("Follow this format: manual('Joe', 'wool', -2)")
+	}else if(typeof amount != 'number'){
+		console.error('Please enter a valid amount. Amount must be a number.')
+		console.error("Follow this format: manual('Joe', 'wool', -2)")
+	}else{
+		for(i in players){
+			if(players[i].name == name){
+				players[i][resource] += Math.floor(amount);
+			}else{}
+		}
+		updateResourceDisplay();
+	}
 }
 
 function preload(){
